@@ -1,5 +1,9 @@
 public class Carro {
+
+    public static int numeroCarros = 0;
+
     public Carro() {
+
     }
 
     public Carro(String cor, String marca, String modelo, boolean ligado, int velocidadeAtual) {
@@ -8,13 +12,16 @@ public class Carro {
         this.modelo = modelo;
         this.ligado = ligado;
         this.velocidadeAtual = velocidadeAtual;
+        numeroCarros++;
     }
 
     private String cor;
     private String marca;
     private String modelo;
     private boolean ligado;
-    private int velocidadeAtual;
+    protected int velocidadeAtual;
+
+
 
     public void acelerar(int velocidadeAMais) {
         if(velocidadeAMais + this.velocidadeAtual > 100) {
@@ -26,18 +33,16 @@ public class Carro {
         }
     }
 
-    public void frear(int velocidadeAMenos) {
+    public void frear(int velocidadeAMenos) throws CarroJaEstaParadoException {
         if(this.velocidadeAtual == 0) {
-            System.out.println("O carro já está parado!");
-        } else {
+            throw new CarroJaEstaParadoException("O carro já está parado!");
+        }
             if(velocidadeAMenos >= velocidadeAtual) {
                 this.velocidadeAtual = 0;
             } else {
                 this.velocidadeAtual -= velocidadeAMenos;
             }
-
             System.out.printf("Voce freou e a velocidade atual é de %dkm/h", this.velocidadeAtual);
-        }
     }
 
     public void mostrarEstadoAtual() {
@@ -61,4 +66,9 @@ public class Carro {
     public boolean estaLigado() {
         return ligado;
     }
+
+    public String toString() {
+        return cor + " " + marca + " " + modelo;
+    }
+
 }
